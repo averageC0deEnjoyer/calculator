@@ -42,7 +42,7 @@ allNumberBtn.forEach(button => {
             resultBool = false;
         };
 
-        if (operator === '') { //pick firstnumber
+        if (operator === '' ) { //first run
             firstNumber += element.value;
             resultDisplay.textContent = firstNumber;
             calculationDisplay.textContent = `${firstNumber}`;
@@ -62,7 +62,7 @@ allNumberBtn.forEach(button => {
 
 operatorBtn.forEach(button => {
     button.addEventListener('click',(event) => {
-    let element = event.target;
+    let element = event.target; 
     if(firstNumber != "" && secondNumber != ""){ //if people dont click equalBtn
         let parseFirstNumber = parseFloat(firstNumber);
         let parseSecondNumber = parseFloat(secondNumber);
@@ -73,9 +73,9 @@ operatorBtn.forEach(button => {
         secondNumber = "";
         operator = element.value;
         calculationDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
-     } else {
-    operator = element.value;
-    calculationDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`
+    } else if (firstNumber != "") {
+        operator = element.value;
+        calculationDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`
     };
     });
 })
@@ -174,7 +174,7 @@ function operate(firstNumber, secondNumber, operator){
 }
 
 function clearDisplay(){
-    resultDisplay.textContent = '';
+    resultDisplay.textContent = '0';
     firstNumber = "";
     secondNumber = "";
     operator = '';
