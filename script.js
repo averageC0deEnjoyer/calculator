@@ -41,6 +41,10 @@ allNumberBtn.forEach(button => {
             resultDisplay.textContent = '';
             resultBool = false;
         };
+        
+        if(element.value == 0 && (firstNumber == "" || secondNumber == "")){ //handle 0 if there is no umber
+            return;
+        };
 
         if (operator === '' ) { //first run
             firstNumber += element.value;
@@ -50,26 +54,27 @@ allNumberBtn.forEach(button => {
             secondNumber += element.value;
             resultDisplay.textContent = secondNumber;
             calculationDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
-        } else {
-            if(resultDisplay.textContent.includes(operator)){
-                resultDisplay.textContent = '';
-            }
-        resultDisplay.textContent += element.value;
-        secondNumber += element.value;
-        }
+        } 
+        // else { from early stage, delete operator in the display before displaying secondNumber
+        //     if(resultDisplay.textContent.includes(operator)){
+        //         resultDisplay.textContent = '';
+        //     }
+        // resultDisplay.textContent += element.value; 
+        // secondNumber += element.value;
+        // }
     })
 })
 
 operatorBtn.forEach(button => {
     button.addEventListener('click',(event) => {
     let element = event.target; 
-    if(firstNumber != "" && secondNumber != ""){ //if people dont click equalBtn
+    if(firstNumber != "" && secondNumber != ""){ //if people dont click equalBtn to calculate
         let parseFirstNumber = parseFloat(firstNumber);
         let parseSecondNumber = parseFloat(secondNumber);
         let result = operate(parseFirstNumber,parseSecondNumber,operator);
         resultDisplay.textContent = result;
-        firstNumber = result;
-        resultBool = true;
+        firstNumber = result; //give result to firstNumber for next calculation
+        resultBool = true; 
         secondNumber = "";
         operator = element.value;
         calculationDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
@@ -95,6 +100,7 @@ equalBtn.addEventListener('click', (event) => {
 })
 
 //checking in which number(first/second) and check again if that number already have comma or not
+// if already choose operator, cant delete the firstNumber
 deleteBtn.addEventListener('click', ()=> {
     if(firstNumber != "" && secondNumber == "" && operator == "") {
         let slicedFirstNumber = firstNumber.toString().slice(0,-1);
@@ -106,13 +112,7 @@ deleteBtn.addEventListener('click', ()=> {
         resultDisplay.textContent = slicedSecondNumber;
         secondNumber = slicedSecondNumber;
         calculationDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
-    }
-        // } else if (firstNumber != "" && secondNumber != "" && operator != ""){
-    //     let slicedSecondNumber = secondNumber.slice(0,-1);
-    //     resultDisplay.textContent = slicedSecondNumber;
-    //     secondNumber = slicedSecondNumber;
-    //     calculationDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
-    // }    
+    } 
 })
 
 //clear everything
@@ -120,6 +120,8 @@ clearBtn.addEventListener('click', () => {
     clearDisplay();
 })
 
+
+//check if firstnumber not null, then if not null check again if it have comma/not.
 commaBtn.addEventListener('click', () => {
     
     if(firstNumber != "" && secondNumber == ""){
