@@ -1,7 +1,10 @@
+//learn about using Bool to only doing some function once
+// learn to reuse global variable, reassign global variabel value, think about the value after some operation, and the global variable state.
+
+
 let firstNumber = "";
 let secondNumber = "";
 let operator = "";
-let storeResult = "";
 
 
 //initialize all button
@@ -32,15 +35,17 @@ operatorBtn = [addBtn, substractBtn, multiplyBtn, divideBtn];
 allNumberBtn.forEach(button => {
     button.addEventListener('click',(event) => {
         let element = event.target;
-        if(resultBool){
+        if(resultBool){ //clear the display before entering new number
             resultDisplay.textContent = '';
             resultBool = false;
         }
-        if(operator === ''){
-            resultDisplay.textContent += element.value;
+        if (operator === '') { //first run
             firstNumber += element.value;
-            console.log(firstNumber);
+            resultDisplay.textContent = firstNumber;
             // calculation.textContent += element.value;
+        } else if (operator != '' && firstNumber !="") {//second run after there is result
+            secondNumber += element.value;
+            resultDisplay.textContent = secondNumber;
         } else {
             if(resultDisplay.textContent.includes(operator)){
                 resultDisplay.textContent = '';
@@ -56,60 +61,47 @@ allNumberBtn.forEach(button => {
 operatorBtn.forEach(button => {
     button.addEventListener('click',(event) => {
     let element = event.target;
+    if(firstNumber != "" && secondNumber != ""){ //if people dont click equalBtn
+        let parseFirstNumber = parseInt(firstNumber);
+        let parseSecondNumber = parseInt(secondNumber);
+        let result = operate(parseFirstNumber,parseSecondNumber,operator);
+        resultDisplay.textContent = result;
+        firstNumber = result;
+        resultBool = true;
+        secondNumber = "";
+        operator = element.value;
+     } else {
     operator = element.value;
-    console.log(operator);
     resultDisplay.textContent = operator;
-    })
+    };
+    });
 })
 
 equalBtn.addEventListener('click', (event) => {
-    if (operator == '+') {
-        parseFirstNumber = parseInt(firstNumber);
-        parseSecondNumber = parseInt(secondNumber);
-        let result = add(parseFirstNumber,parseSecondNumber);
+    if(firstNumber != "" && secondNumber != ""){
+        parseFirstNumber = parseFloat(firstNumber);
+        parseSecondNumber = parseFloat(secondNumber);
+        let result = operate(parseFirstNumber,parseSecondNumber,operator);
         resultDisplay.textContent = result;
-        storeResult = result;
+        // storeResult = result;
+        firstNumber = result;
         resultBool = true;
-    } else if (operator == '-') {
-        parseFirstNumber = parseInt(firstNumber);
-        parseSecondNumber = parseInt(secondNumber);
-        let result = substract(parseFirstNumber,parseSecondNumber);
-        resultDisplay.textContent = result;
-        storeResult = result;
-        resultBool = true;
-    } else if (operator == '*') {
-        parseFirstNumber = parseInt(firstNumber);
-        parseSecondNumber = parseInt(secondNumber);
-        let result = multiply(parseFirstNumber,parseSecondNumber);
-        resultDisplay.textContent = result;
-        storeResult = result;
-        resultBool = true;
-    } else if (operator == '+') {
-        parseFirstNumber = parseInt(firstNumber);
-        parseSecondNumber = parseInt(secondNumber);
-        let result = divide(parseFirstNumber,parseSecondNumber);
-        resultDisplay.textContent = result;
-        storeResult = result;
-        resultBool = true;
+        secondNumber = "";
+        operator = "";
     }
 })
 
 
 deleteBtn.addEventListener('click', ()=> {
-    if(firstNumber.length > 0 && secondNumber.length == 0 & !resultBool) {
-        let slicedFirstNumber = firstNumber.slice(0,-1);
+    if(firstNumber != "" && secondNumber == "") {
+        let slicedFirstNumber = firstNumber.toString().slice(0,-1);
         resultDisplay.textContent = slicedFirstNumber;
         firstNumber = slicedFirstNumber;
-    } else if (firstNumber.length != 0 && secondNumber.length > 0 & !resultBool){
+    } else if (firstNumber.length != 0 && secondNumber.length != ""){
         let slicedSecondNumber = secondNumber.slice(0,-1);
         resultDisplay.textContent = slicedSecondNumber;
         secondNumber = slicedSecondNumber;
-    } else if (resultBool) {
-        slicedResult = storeResult.toString().slice(0,-1);
-        resultDisplay.textContent = slicedResult;
-        storeResult = slicedResult;
-        console.log(slicedResult);
-    }       
+    }    
 })
 
 //clear everything
@@ -117,6 +109,19 @@ clearBtn.addEventListener('click', () => {
     clearDisplay();
 })
 
+commaBtn.addEventListener('click', () => {
+    if(!firstNumber.toString().includes('.')){
+        if(firstNumber != "" && secondNumber == ""){
+            commaFirstNumber = firstNumber + '.';
+            firstNumber = commaFirstNumber;
+            resultDisplay.textContent = firstNumber;
+        } else if(firstNumber !="" & secondNumber != ""){
+            commaSecondNumber = secondNumber + '.';
+            secondNumber = commaSecondNumber;
+            resultDisplay.textContent = secondNumber;
+        }
+    }
+})
 
 function add(x,y){
     return x+y;
@@ -139,7 +144,7 @@ function divide(x,y){
 }
 
 function operate(firstNumber, secondNumber, operator){
-    let result = 0;
+    let result = "";
     if (operator == '+') {
         result = add(firstNumber, secondNumber);
     } else if (operator == '-') {
@@ -157,5 +162,5 @@ function clearDisplay(){
     firstNumber = "";
     secondNumber = "";
     operator = '';
-    storeResult = "";
+    // storeResult = "";
 }
