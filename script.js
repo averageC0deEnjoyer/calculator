@@ -26,11 +26,13 @@ multiplyBtn = document.querySelector('.multiplication.button');
 divideBtn = document.querySelector('.divide.button');
 commaBtn = document.querySelector('.comma.button');
 resultDisplay = document.querySelector('.result');
-calculation = document.querySelector('.calculation');
+calculationDisplay = document.querySelector('.calculation');
 equalBtn = document.querySelector('.equal.button');
 resultBool = false; //create a value to check if result already in display, then need to clearDisplay();
 allNumberBtn = [zeroBtn, oneBtn, twoBtn, threeBtn, fourBtn, fiveBtn, sixBtn, sevenBtn, eightBtn, nineBtn];
 operatorBtn = [addBtn, substractBtn, multiplyBtn, divideBtn];
+
+
 
 allNumberBtn.forEach(button => {
     button.addEventListener('click',(event) => {
@@ -42,10 +44,12 @@ allNumberBtn.forEach(button => {
         if (operator === '') { //first run
             firstNumber += element.value;
             resultDisplay.textContent = firstNumber;
+            calculationDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
             // calculation.textContent += element.value;
         } else if (operator != '' && firstNumber !="") {//second run after there is result
             secondNumber += element.value;
             resultDisplay.textContent = secondNumber;
+            calculationDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
         } else {
             if(resultDisplay.textContent.includes(operator)){
                 resultDisplay.textContent = '';
@@ -53,7 +57,6 @@ allNumberBtn.forEach(button => {
             resultDisplay.textContent += element.value;
             secondNumber += element.value;
             // calculation.textContent += element.value;
-            console.log(secondNumber)
         }
     })
 })
@@ -73,6 +76,7 @@ operatorBtn.forEach(button => {
      } else {
     operator = element.value;
     resultDisplay.textContent = operator;
+    calculationDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`
     };
     });
 })
@@ -158,9 +162,11 @@ function operate(firstNumber, secondNumber, operator){
 }
 
 function clearDisplay(){
-    resultDisplay.textContent = ''
+    resultDisplay.textContent = '';
     firstNumber = "";
     secondNumber = "";
     operator = '';
+    calculationDisplay.textContent = '';
     // storeResult = "";
 }
+
