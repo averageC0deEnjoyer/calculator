@@ -68,14 +68,15 @@ equalBtn.addEventListener('click', (event) => {
 
 
 deleteBtn.addEventListener('click', ()=> {
-    if(firstNumber.length > 0 && secondNumber.length == 0){
-        firstNumber.slice(0,-1);
-        console.log(firstNumber);
-        resultDisplay = firstNumber;
-    } else if(firstNumber.length != 0 && secondNumber.length > 0){
-        secondNumber.slice(0,-1);
-        resultDisplay = secondNumber;
-    }
+    if(firstNumber.length>0 && secondNumber.length == 0) {
+        let slicedFirstNumber = firstNumber.slice(0,-1);
+        resultDisplay.textContent = slicedFirstNumber;
+        firstNumber = slicedFirstNumber;
+    } else if (firstNumber.length != 0 && secondNumber.length > 0){
+        let slicedSecondNumber = secondNumber.slice(0,-1);
+        resultDisplay.textContent = slicedSecondNumber;
+        secondNumber = slicedSecondNumber;
+    }        
 })
 
 
