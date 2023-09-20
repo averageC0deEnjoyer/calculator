@@ -37,16 +37,16 @@ operatorBtn = [addBtn, substractBtn, multiplyBtn, divideBtn];
 allNumberBtn.forEach(button => {
     button.addEventListener('click',(event) => {
         let element = event.target;
-        if(resultBool){ //clear the display before entering new number
+        if(resultBool){ //if there is result
             resultDisplay.textContent = '';
             resultBool = false;
-        }
-        if (operator === '') { //first run
+        };
+
+        if (operator === '') { //pick firstnumber
             firstNumber += element.value;
             resultDisplay.textContent = firstNumber;
-            calculationDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
-            // calculation.textContent += element.value;
-        } else if (operator != '' && firstNumber !="") {//second run after there is result
+            calculationDisplay.textContent = `${firstNumber}`;
+        } else if (operator != '' && firstNumber != "") { 
             secondNumber += element.value;
             resultDisplay.textContent = secondNumber;
             calculationDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
@@ -54,9 +54,8 @@ allNumberBtn.forEach(button => {
             if(resultDisplay.textContent.includes(operator)){
                 resultDisplay.textContent = '';
             }
-            resultDisplay.textContent += element.value;
-            secondNumber += element.value;
-            // calculation.textContent += element.value;
+        resultDisplay.textContent += element.value;
+        secondNumber += element.value;
         }
     })
 })
@@ -65,17 +64,17 @@ operatorBtn.forEach(button => {
     button.addEventListener('click',(event) => {
     let element = event.target;
     if(firstNumber != "" && secondNumber != ""){ //if people dont click equalBtn
-        let parseFirstNumber = parseInt(firstNumber);
-        let parseSecondNumber = parseInt(secondNumber);
+        let parseFirstNumber = parseFloat(firstNumber);
+        let parseSecondNumber = parseFloat(secondNumber);
         let result = operate(parseFirstNumber,parseSecondNumber,operator);
         resultDisplay.textContent = result;
         firstNumber = result;
         resultBool = true;
         secondNumber = "";
         operator = element.value;
+        calculationDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
      } else {
     operator = element.value;
-    resultDisplay.textContent = operator;
     calculationDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`
     };
     });
@@ -95,17 +94,25 @@ equalBtn.addEventListener('click', (event) => {
     }
 })
 
-
+//checking in which number(first/second) and check again if that number already have comma or not
 deleteBtn.addEventListener('click', ()=> {
-    if(firstNumber != "" && secondNumber == "") {
+    if(firstNumber != "" && secondNumber == "" && operator == "") {
         let slicedFirstNumber = firstNumber.toString().slice(0,-1);
         resultDisplay.textContent = slicedFirstNumber;
         firstNumber = slicedFirstNumber;
-    } else if (firstNumber.length != 0 && secondNumber.length != ""){
-        let slicedSecondNumber = secondNumber.slice(0,-1);
+        calculationDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
+    } else if (firstNumber != "" && operator != "" && secondNumber != ""){
+        let slicedSecondNumber = secondNumber.toString().slice(0,-1);
         resultDisplay.textContent = slicedSecondNumber;
         secondNumber = slicedSecondNumber;
-    }    
+        calculationDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
+    }
+        // } else if (firstNumber != "" && secondNumber != "" && operator != ""){
+    //     let slicedSecondNumber = secondNumber.slice(0,-1);
+    //     resultDisplay.textContent = slicedSecondNumber;
+    //     secondNumber = slicedSecondNumber;
+    //     calculationDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
+    // }    
 })
 
 //clear everything
@@ -114,15 +121,20 @@ clearBtn.addEventListener('click', () => {
 })
 
 commaBtn.addEventListener('click', () => {
-    if(!firstNumber.toString().includes('.')){
-        if(firstNumber != "" && secondNumber == ""){
-            commaFirstNumber = firstNumber + '.';
-            firstNumber = commaFirstNumber;
-            resultDisplay.textContent = firstNumber;
-        } else if(firstNumber !="" & secondNumber != ""){
-            commaSecondNumber = secondNumber + '.';
-            secondNumber = commaSecondNumber;
-            resultDisplay.textContent = secondNumber;
+    
+    if(firstNumber != "" && secondNumber == ""){
+        if(!firstNumber.toString().includes('.')){
+        commaFirstNumber = firstNumber + '.';
+        firstNumber = commaFirstNumber;
+        resultDisplay.textContent = firstNumber;
+        calculationDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
+        }
+    } else if(firstNumber !="" & secondNumber != ""){
+        if(!secondNumber.toString().includes('.')){
+        commaSecondNumber = secondNumber + '.';
+        secondNumber = commaSecondNumber;
+        resultDisplay.textContent = secondNumber;
+        calculationDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
         }
     }
 })
