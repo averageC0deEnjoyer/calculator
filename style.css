@@ -3,6 +3,10 @@ html, body {
     height: 100%; 
     overflow: hidden}
 
+* {
+    touch-action: manipulation;    
+}
+
 .container-big {
     display: flex;
     flex-direction: column;
