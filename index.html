@@ -4,42 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href='style.css'>
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="containerbig">
+    <div class="container-big">
         <div class="calculator-body">
-            <div class="display">12345</div>
+            <div class="display">
+                <div class="calculation">1</div>
+                <div class="result"></div>
+            </div>
             <div class="row 1">
-                <div class = 'delete-button'>Delete</div>
-                <div class = 'clear-button'>Clear</div>
+                <button class = 'delete button'>Delete</button>
+                <button class = 'clear button'>Clear</button>
             </div>
             <div class="row 2">
-                <div class="seven-button">7</div>
-                <div class="eight-button">8</div>
-                <div class="nine-button">9</div>
-                <div class="divide-button">÷</div>
+                <div class="seven button">7</div>
+                <div class="eight button">8</div>
+                <div class="nine button">9</div>
+                <div class="divide button" value="/">÷</div>
             </div>
             <div class="row 3">
-                <div class="four-button">4</div>
-                <div class="five-button">5</div>
-                <div class="six-button">6</div>
-                <div class="multiplication-button">×</div>
+                <div class="four button">4</div>
+                <div class="five button">5</div>
+                <div class="six button">6</div>
+                <div class="multiplication button" value="*">×</div>
             </div>
             <div class="row 4">
-                <div class="one-button">1</div>
-                <div class="two-button">2</div>
-                <div class="three-button">3</div>
-                <div class="minus-button">-</div>
+                <button class="one button" value=1>1</button>
+                <button class="two button">2</button>
+                <button class="three button">3</button>
+                <button class="minus button">-</button>
             </div>
             <div class="row 5">
-                <div class="comma-button">.</div>
-                <div class="zero-button">0</div>
-                <div class="equal-button">=</div>
-                <div class="plus-button">+</div>
+                <div class="comma button">.</div>
+                <div class="zero button">0</div>
+                <button class="equal button">=</button>
+                <button class="plus button" value="+">+</button>
             </div>
         </div>
         <div class="footer">
-            <p class="copyright"></p>
+            <p class="copyright">Copyright by averageCodeEnjoyer</p>
         </div>
     </div>
 </body>
