@@ -42,15 +42,20 @@ allNumberBtn.forEach(button => {
             resultBool = false;
         };
         
-        if(element.value == 0 && (firstNumber == "" || secondNumber == "")){ //handle 0 if there is no umber
+        if(element.value == 0 && firstNumber == ""){ //handle 0 if there is no firstNumber
             return;
         };
+
+        
 
         if (operator === '' ) { //first run
             firstNumber += element.value;
             resultDisplay.textContent = firstNumber;
             calculationDisplay.textContent = `${firstNumber}`;
         } else if (operator != '' && firstNumber != "") { 
+            if(element.value == 0 && secondNumber == ""){ //handle 0 if there is no secondNumber
+                return;
+            };
             secondNumber += element.value;
             resultDisplay.textContent = secondNumber;
             calculationDisplay.textContent = `${firstNumber} ${operator} ${secondNumber}`;
